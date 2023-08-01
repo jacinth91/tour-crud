@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng update @angular/core@14 @angular/cli@14",
+    "start": "ng update @angular/core@14 @angular/cli@14 --force",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
