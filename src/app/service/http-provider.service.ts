@@ -8,10 +8,11 @@ var apiUrl = "http://localhost:4000";
 
 var httpLink = {
   userLogin:apiUrl+"/auth/login",
-  getAllEmployee: apiUrl + "/tours",
-  deleteEmployeeById: apiUrl + "/tours/delete/",
-  getEmployeeDetailById: apiUrl + "/api/employee/getEmployeeDetailById",
-  saveEmployee: apiUrl + "/tours"
+  getAllTours: apiUrl + "/tours",
+  deleteTourById: apiUrl + "/tours/delete/",
+  getTourDetailById: apiUrl + "/tours/",
+  saveTour: apiUrl + "/tours",
+  updateTourById :apiUrl + "/tours/"
 }
 
 @Injectable({
@@ -25,20 +26,23 @@ export class HttpProviderService {
 
   }
 
-  public getAllEmployee(): Observable<any> {
-    return this.webApiService.get(httpLink.getAllEmployee);
+  public getAllTours(): Observable<any> {
+    return this.webApiService.get(httpLink.getAllTours);
   }
 
-  public deleteEmployeeById(model: any): Observable<any> {
-    return this.webApiService.post(httpLink.deleteEmployeeById + model, "");
+  public deleteTourById(model: any): Observable<any> {
+    return this.webApiService.post(httpLink.deleteTourById + model, "");
   }
 
-  public getEmployeeDetailById(model: any): Observable<any> {
-    return this.webApiService.get(httpLink.getEmployeeDetailById + '?employeeId=' + model);
+  public getTourDetailById(model: any): Observable<any> {
+    return this.webApiService.get(httpLink.getTourDetailById  + model);
   }
 
-  public saveEmployee(model: any): Observable<any> {
-    return this.webApiService.post(httpLink.saveEmployee, model);
+  public saveTour(model: any): Observable<any> {
+    return this.webApiService.post(httpLink.saveTour, model);
+  }
+  public updateTour(id:any,model: any,): Observable<any> {
+    return this.webApiService.post2(httpLink.updateTourById + id,model);
   }
 
 }

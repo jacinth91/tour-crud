@@ -11,6 +11,7 @@ export class AppComponent {
   constructor(private router: Router) { }
 
   HomeClick(){
-    this.router.navigate(['Home']);
+    window.sessionStorage.clear();
+    this.router.navigate(['Login']);
   }
 }

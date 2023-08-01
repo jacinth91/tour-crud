@@ -38,15 +38,19 @@ const MODALS: { [name: string]: Type<any> } = {
 export class HomeComponent implements OnInit {
   closeResult = '';
   tourList: any = [];
+  userRole: any;
+  USER_KEY = 'auth-user';
   constructor(private router: Router, private modalService: NgbModal,
     private toastr: ToastrService, private httpProvider : HttpProviderService) { }
 
   ngOnInit(): void {
-    this.getAllEmployee();
+    this.getUser()
+    this.getAllTour();
+
   }
 
-  async getAllEmployee() {
-    this.httpProvider.getAllEmployee().subscribe((data : any) => {
+  async getAllTour() {
+    this.httpProvider.getAllTours().subscribe((data : any) => {
       console.log(data)
       if (data != null && data.body != null) {
         var resultData = data.body.data;
@@ -66,31 +70,42 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  AddEmployee() {
+  AddTour() {
     this.router.navigate(['AddTour']);
   }
 
-  deleteEmployeeConfirmation(employee: any) {
+  deleteTourConfirmation(tour: any) {
     this.modalService.open(MODALS['deleteModal'],
       {
         ariaLabelledBy: 'modal-basic-title'
       }).result.then((result) => {
-        this.deleteEmployee(employee);
+        this.deleteTour(tour);
       },
         (reason) => {});
   }
 
-  deleteEmployee(tour: any) {
-    this.httpProvider.deleteEmployeeById(tour._id).subscribe((data : any) => {
+  deleteTour(tour: any) {
+    this.httpProvider.deleteTourById(tour._id).subscribe((data : any) => {
       console.log(data)
       if (data != null && data.body != null) {
         var resultData = data.body;
 
           this.toastr.success(resultData.message);
-          this.getAllEmployee();
+          this.getAllTour();
 
       }
     },
     (error : any) => {});
+  }
+
+  getUser(): any {
+    const user = window.sessionStorage.getItem(this.USER_KEY);
+    if (user) {
+      const data = JSON.parse(user);
+      this.userRole = data?.body?.data?.role;
+      console.log(this.userRole)
+    }
+
+
   }
 }

@@ -35,6 +35,26 @@ export class WebApiService {
         catchError(this.handleError)
       );
   }
+  post2(url: string,model: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Cache-Control' : 'no-cache',
+        'Pragma' : 'no-cache'
+      }),
+      observe: "response" as 'body'
+    };
+
+    return this.httpClient.post(
+      url,
+      model,
+      httpOptions
+    )
+      .pipe(
+        map((response: any) => this.ReturnResponseData(response)),
+        catchError(this.handleError)
+      );
+  }
 
   // Post call method
   // Param 1 : authToken

@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
-import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { AddTourComponent } from './add-tour/add-tour.component';
+import { EditTourComponent } from './edit-tour/edit-tour.component';
 import { HomeComponent } from './home/home.component';
-import { ViewEmployeeComponent } from './view-employee/view-employee.component';
 import { LoginComponent } from './home/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'Login', pathMatch: 'full' },
   { path: 'Login', component: LoginComponent },
   { path: 'Home', component: HomeComponent },
-  { path: 'ViewTour/:tourId', component: ViewEmployeeComponent },
-  { path: 'AddTour', component: AddEmployeeComponent },
-  { path: 'EditTour/:tourId', component: EditEmployeeComponent },
+  { path: 'AddTour', component: AddTourComponent },
+  { path: 'EditTour/:tourId', component: EditTourComponent },
 ];
 
 @NgModule({

@@ -14,11 +14,13 @@ import { async } from '@angular/core/testing';
 
 export class LoginComponent implements OnInit {
   useloginForm: loginForm = new loginForm();
+  userRole:any
 
   @ViewChild("loginForm")
   loginForm!: NgForm;
     loading = false;
     submitted = false;
+    USER_KEY = 'auth-user';
 
     constructor(
       private httpProvider: HttpProviderService,
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-
+this.getUser()
     }
 
     // convenience getter for easy access to form fields
@@ -41,6 +43,7 @@ export class LoginComponent implements OnInit {
       console.log(this.loginForm.value)
       this.httpProvider.logUserIn(this.loginForm.value).subscribe(async(data) =>{
         if (data != null && data.body != null) {
+          this.saveUser(data);
           this.toastr.success('Log In Sucessfull')
           setTimeout(() => {
             this.router.navigate(['Home']);
@@ -56,7 +59,24 @@ export class LoginComponent implements OnInit {
 
 
     }
+    clean(): void {
+      window.sessionStorage.clear();
+    }
 
+    saveUser(user: any): void {
+      window.sessionStorage.removeItem(this.USER_KEY);
+      window.sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    }
+     getUser(): any {
+      const user = window.sessionStorage.getItem(this.USER_KEY);
+      if (user) {
+        const data = JSON.parse(user);
+        this.userRole = data?.data?.name;
+
+      }
+
+      return {};
+    }
 
 }
 

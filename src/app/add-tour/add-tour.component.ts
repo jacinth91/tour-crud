@@ -5,27 +5,30 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpProviderService } from '../service/http-provider.service';
 
 @Component({
-  selector: 'app-add-employee',
-  templateUrl: './add-employee.component.html',
-  styleUrls: ['./add-employee.component.scss']
+  selector: 'app-add-tour',
+  templateUrl: './add-tour.component.html',
+  styleUrls: ['./add-tour.component.scss']
 })
-export class AddEmployeeComponent implements OnInit {
+export class AddTourComponent implements OnInit {
   addTourForm: tourForm = new tourForm();
 
-  @ViewChild("employeeForm")
-  employeeForm!: NgForm;
+  @ViewChild("tourForm")
+  tourForm!: NgForm;
 
   isSubmitted: boolean = false;
+  USER_KEY = 'auth-user';
+  userRole: any;
 
   constructor(private router: Router, private httpProvider: HttpProviderService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.getUser()
   }
 
   AddTour(isValid: any) {
     this.isSubmitted = true;
     if (isValid) {
-      this.httpProvider.saveEmployee(this.addTourForm).subscribe(async data => {
+      this.httpProvider.saveTour(this.addTourForm).subscribe(async (data:any) => {
         console.log(data)
         if (data != null && data.body != null) {
           if (data != null && data.body != null) {
@@ -39,13 +42,23 @@ export class AddEmployeeComponent implements OnInit {
           }
         }
       },
-        async error => {
+        async (error: { message: any; }) => {
           this.toastr.error(error.message);
           setTimeout(() => {
             this.router.navigate(['/Home']);
           }, 500);
         });
     }
+  }
+  getUser(): any {
+    const user = window.sessionStorage.getItem(this.USER_KEY);
+    if (user) {
+      const data = JSON.parse(user);
+      this.userRole = data?.data?.name;
+      console.log(data)
+    }
+
+
   }
 
 }

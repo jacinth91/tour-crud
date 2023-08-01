@@ -7,7 +7,7 @@
             <h4><b>Manage Tours</b></h4>
           </div>
           <div class="col-sm-6">
-            <button class="btn btn-success" (click)="AddEmployee()">
+            <button class="btn btn-success" (click)="AddTour()">
               <i class='fas fa-plus-circle'></i><span> ADD</span>
             </button>
           </div>
@@ -32,9 +32,9 @@
             <td>{{ tour.date_of_tour }}</td>
             <td>{{ tour.images }}</td>
             <td>
-              <a href="#" [routerLink]="['/ViewTour/', tour.id]" class="btn"><i class='fas fa-eye view'></i></a>
-              <a href="#" [routerLink]="['/EditTour/', tour.id]" class="btn"><i class="fa fa-edit edit"></i></a>
-              <button type="button" (click)="deleteEmployeeConfirmation(tour)" class="btn"><i class='fas fa-trash-alt delete'></i></button>
+
+              <a *ngIf="userRole==='ADMIN'"  href="#" [routerLink]="['/EditTour/', tour._id]" class="btn"><i class="fa fa-edit edit"></i></a>
+              <button  *ngIf="userRole==='ADMIN'" type="button" (click)="deleteTourConfirmation(tour)" class="btn"><i class='fas fa-trash-alt delete'></i></button>
             </td>
           </tr>
           <tr>
